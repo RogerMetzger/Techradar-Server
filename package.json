@@ -1,0 +1,30 @@
+{
+  "name": "techradar-server",
+  "version": "1.0.0",
+  "description": "Server for Techradar Website",
+  "main": "server.js",
+  "scripts": {
+    "test": "npm run test",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RogerMetzger/Techradar-Server.git"
+  },
+  "keywords": [
+    "NodeJS",
+    "Techradar",
+    "WEBLAB",
+    "Express"
+  ],
+  "author": "Roger Metzger",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/RogerMetzger/Techradar-Server/issues"
+  },
+  "homepage": "https://github.com/RogerMetzger/Techradar-Server#readme",
+  "dependencies": {
+    "express": "^4.17.3",
+    "jsonwebtoken": "^8.5.1"
+  }
+}
