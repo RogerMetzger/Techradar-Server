@@ -1,2 +1,2 @@
-# Techradar-Server
-Server für Techradar Website
+# Techradar
+Repository für die Techradar Website
