@@ -1,34 +1,50 @@
+require('dotenv').config({ path: './config.env' });
+
 const express = require('express');
 const bodyParser = require('body-parser');
+const dbo = require('./database/connection');
 
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('./swagger.json');
+
+const PORT = process.env.PORT || 8000;
 const server = express();
 
 server.use(bodyParser.json());
+server.use(require('./routes/technology'));
+server.use('/healthcheck', require('express-healthcheck')());
+server.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
-server.get('/technologies', (req, res) => {
-    console.log('GET called!');
-    res.send('GET called');
-    res.end();
-});
+const logErrors = (err, req, res, next) => {
+    console.error(err.stack);
+    next(err);
+};
 
-server.post('/technologies', (req, res) => {
-    console.log('POST called!');
-    res.send('POST called');
-    res.end();
-});
+const clientErrorHandler = (err, req, res, next) => {
+    if (req.xhr) {
+        res.status(500).send({ error: 'Something failed!' });
+    } else {
+        next(err);
+    }
+};
 
-server.put('/technologies', (req, res) => {
-    console.log('PUT called!');
-    res.send('PUT called');
-    res.end();
-});
+const errorHandler = (err, req, res, next) => {
+    res.status(500);
+    res.render('error', { error: err });
+};
 
-server.delete('/technologies', (req, res) => {
-    console.log('DELETE called!');
-    res.send('DELETE called');
-    res.end();
-});
+server.use(logErrors);
+server.use(clientErrorHandler);
+server.use(errorHandler);
 
-server.listen(8000, () => {
-    console.log('Server started!');
+
+dbo.connectToServer(function (err) {
+    if (err) {
+        console.error(err);
+        process.exit();
+    }
+})
+
+server.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}.`);
 });

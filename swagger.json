@@ -1,0 +1,346 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "1.0.0",
+        "title": "Techradar Project CRUD",
+        "description": "Techradar Application API"
+    },
+    "host": "localhost:8000",
+    "basePath": "/",
+    "tags": [
+        {
+            "name": "User",
+            "description": "API for users in the system"
+        },
+        {
+            "name": "Technology",
+            "description": "API for technologies in the system"
+        }
+    ],
+    "schemes": [
+        "http"
+    ],
+    "consumes": [
+        "application/json"
+    ],
+    "produces": [
+        "application/json"
+    ],
+    "paths": {
+        "/technology": {
+            "post": {
+                "tags": [
+                    "Technology"
+                ],
+                "description": "Create new technology in system",
+                "parameters": [
+                    {
+                        "name": "technology",
+                        "in": "body",
+                        "description": "technology that we want to create",
+                        "schema": {
+                            "$ref": "#/definitions/createTechnology"
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "New technology is created",
+                        "schema": {
+                            "$ref": "#/definitions/Technology"
+                        }
+                    }
+                }
+            }
+        },
+        "/technologies": {
+            "get": {
+                "tags": [
+                    "Technology"
+                ],
+                "summary": "Get all technologies in system",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Technologies"
+                        }
+                    }
+                }
+            }
+        },
+        "/technology/{id}": {
+            "parameters": [
+                {
+                    "name": "id",
+                    "in": "path",
+                    "required": true,
+                    "description": "ID of technology that we want to find",
+                    "type": "integer"
+                }
+            ],
+            "get": {
+                "tags": [
+                    "Technology"
+                ],
+                "summary": "Get the technology",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Technology"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Delete technology with given ID",
+                "tags": [
+                    "Technology"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Technology is deleted",
+                        "schema": {
+                            "$ref": "#/definitions/Technology"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "summary": "Update technology with given ID",
+                "tags": [
+                    "Technology"
+                ],
+                "parameters": [
+                    {
+                        "name": "technology",
+                        "in": "body",
+                        "description": "Technology with new values",
+                        "schema": {
+                            "$ref": "#/definitions/updateTechnology"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Technology is updated",
+                        "schema": {
+                            "$ref": "#/definitions/Technology"
+                        }
+                    }
+                }
+            }
+        },
+        "/technology/publish/{id}": {
+            "parameters": [
+                {
+                    "name": "id",
+                    "in": "path",
+                    "required": true,
+                    "description": "ID of technology that we want to publish",
+                    "type": "integer"
+                }
+            ],
+            "put": {
+                "summary": "Publish technology with given ID",
+                "tags": [
+                    "Technology"
+                ],
+                "parameters": [
+                    {
+                        "name": "technology",
+                        "in": "body",
+                        "description": "Technology with values necessary for publication",
+                        "schema": {
+                            "$ref": "#/definitions/publishTechnology"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Technology is published",
+                        "schema": {
+                            "$ref": "#/definitions/Technology"
+                        }
+                    }
+                }
+            }
+        },
+        "/technology/classify/{id}": {
+            "parameters": [
+                {
+                    "name": "id",
+                    "in": "path",
+                    "required": true,
+                    "description": "ID of technology that we want to classify",
+                    "type": "integer"
+                }
+            ],
+            "put": {
+                "summary": "Classify technology with given ID",
+                "tags": [
+                    "Technology"
+                ],
+                "parameters": [
+                    {
+                        "name": "technology",
+                        "in": "body",
+                        "description": "Technology with new values for classification",
+                        "schema": {
+                            "$ref": "#/definitions/updateClassification"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Technology is classified",
+                        "schema": {
+                            "$ref": "#/definitions/Technology"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "Technology": {
+            "required": [
+                "name",
+                "description",
+                "category",
+                "isPublic",
+                "created_by",
+                "created_at"
+            ],
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "category": {
+                    "type": "string"
+                },
+                "ring": {
+                    "type": "string"
+                },
+                "classification": {
+                    "type": "string"
+                },
+                "isPublic": {
+                    "type": "boolean"
+                },
+                "published_at": {
+                    "type": "string"
+                },
+                "created_by": {
+                    "type": "integer"
+                },
+                "created_at": {
+                    "type": "string"
+                },
+                "updated_by": {
+                    "type": "integer"
+                },
+                "updated_at": {
+                    "type": "string"
+                }
+            }
+        },
+        "createTechnology": {
+            "required": [
+                "name",
+                "description",
+                "category",
+                "created_by"
+            ],
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "category": {
+                    "type": "string"
+                },
+                "ring": {
+                    "type": "string"
+                },
+                "classification": {
+                    "type": "string"
+                },
+                "created_by": {
+                    "type": "integer"
+                }
+            }
+        },
+        "publishTechnology": {
+            "required": [
+                "ring",
+                "classification",
+                "updated_by"
+            ],
+            "properties": {
+                "ring": {
+                    "type": "string"
+                },
+                "classification": {
+                    "type": "string"
+                },
+                "updated_by": {
+                    "type": "integer"
+                }
+            }
+        },
+        "updateTechnology": {
+            "required": [
+                "name",
+                "description",
+                "category",
+                "updated_by"
+            ],
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "category": {
+                    "type": "string"
+                },
+                "updated_by": {
+                    "type": "integer"
+                }
+            }
+        },
+        "updateClassification": {
+            "required": [
+                "ring",
+                "classification",
+                "updated_by"
+            ],
+            "properties": {
+                "ring": {
+                    "type": "string"
+                },
+                "classification": {
+                    "type": "string"
+                },
+                "updated_by": {
+                    "type": "integer"
+                }
+            }
+        },
+        "Technologies": {
+            "type": "array",
+            "$ref": "#/definitions/Technology"
+        }
+    }
+}
