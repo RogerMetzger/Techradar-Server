@@ -3,6 +3,8 @@ import { AuthService } from 'src/app/services/auth.service';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { User } from 'src/app/models/user.model';
+import { SessionStorageService } from 'src/app/services/session-storage.service';
+import { UserSessionService } from 'src/app/services/user-session.service';
 
 @Component({
   selector: 'app-register',
@@ -18,11 +20,15 @@ export class RegisterComponent implements OnInit {
 
   constructor(
     private auth: AuthService,
+    private storage: SessionStorageService,
+    private userSession: UserSessionService,
     private router: Router
   ) { }
 
   ngOnInit(): void {
-    this.isUserLoggedIn();
+    if(this.userSession.isLoggedIn()) {
+      this.isLoggedIn = true;
+    }
   }
 
   onSubmit(itemForm: NgForm) {
@@ -31,8 +37,8 @@ export class RegisterComponent implements OnInit {
       this.auth.register(this.user.email, this.user.password).subscribe({
         next: user => {
           console.log(user);
-          this.auth.setDataInLocalStorage('userData', JSON.stringify(user.data));
-          this.auth.setDataInLocalStorage('token', user.token);
+          this.storage.saveUserDetails(JSON.stringify(user.data));
+          this.storage.saveToken(user.token);
           this.isLoggedIn = true;
           this.router.navigate(['Login']);
       }, 
@@ -42,12 +48,4 @@ export class RegisterComponent implements OnInit {
       });
     }
   }
-  
-  isUserLoggedIn() {
-    if(this.auth.getUserDetails() != null)
-    {
-      this.isLoggedIn = true;
-    }
-  }
-
 }

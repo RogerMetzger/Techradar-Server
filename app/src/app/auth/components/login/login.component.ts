@@ -3,6 +3,8 @@ import { NgForm } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
 import { User } from '../../../models/user.model'
+import { SessionStorageService } from 'src/app/services/session-storage.service';
+import { UserSessionService } from 'src/app/services/user-session.service';
 
 @Component({
   selector: 'app-login',
@@ -18,11 +20,15 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private auth: AuthService, 
+    private storage: SessionStorageService,
+    private userSession: UserSessionService,
     private router: Router
     ) { }
 
   ngOnInit(): void {
-    this.isUserLoggedIn();
+    if (this.userSession.isLoggedIn()) {
+      this.isLoggedIn = true;
+    }
   }
 
   onSubmit(itemForm: NgForm) {
@@ -31,8 +37,8 @@ export class LoginComponent implements OnInit {
       this.auth.login(this.user.email, this.user.password).subscribe({
         next: user => {
           console.log(user);
-          this.auth.setDataInLocalStorage('userData', JSON.stringify(user.data));
-          this.auth.setDataInLocalStorage('token', user.token);
+          this.storage.saveUserDetails(JSON.stringify(user.data));
+          this.storage.saveToken(user.token);
           this.isLoggedIn = true;
           this.router.navigate(['']);
       }, 
@@ -43,15 +49,8 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  isUserLoggedIn() {
-    console.log(this.auth.getUserDetails());
-    if (this.auth.getUserDetails() != null) {
-      this.isLoggedIn = true;
-    }
-  }
-
   logout() {
-    this.auth.clearStorage();
+    this.userSession.logout();
     this.router.navigate(['']);
   }
 }

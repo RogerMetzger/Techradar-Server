@@ -11,8 +11,6 @@ export class AuthService {
 
   constructor(private http: HttpClient) { }
 
-  //api
-
   login(email: string, password: string): Observable<any> {
     return this.http.post(`${this.baseUrl}/user/login`, {
       email,
@@ -25,23 +23,5 @@ export class AuthService {
       email,
       password
     });
-  }
-
-  //localstorage
-
-  getUserDetails() {
-    return localStorage.getItem('userData') ? JSON.parse(localStorage.getItem('userData')!) : null;
-  }
-
-  setDataInLocalStorage(variableName: string, data: string) {
-    localStorage.setItem(variableName, data);
-  }
-
-  getToken() {
-    return localStorage.getItem('token');
-  }
-
-  clearStorage() {
-    localStorage.clear();
   }
 }
