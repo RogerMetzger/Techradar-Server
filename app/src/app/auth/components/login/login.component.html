@@ -1,0 +1,14 @@
+<div>
+    <div *ngIf='!this.isLoggedIn'>
+        <h4>Login</h4>
+        <form #itemForm="ngForm" (ngSubmit)="onSubmit(itemForm)">
+            <div><input type="text" name="email" required placeholder="Email" [(ngModel)]="user.email"></div>
+            <div><input type="password" name="password" required placeholder="Password" [(ngModel)]="user.password"></div>
+            <input type="submit" value="Login">
+        </form>
+    </div>
+    <div *ngIf='this.isLoggedIn'>
+        <h1>You are logged in</h1>
+        <button (click)='logout()'>Log-out</button>
+    </div>
+</div>
