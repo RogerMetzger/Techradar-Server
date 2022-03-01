@@ -40,7 +40,7 @@ export class RegisterComponent implements OnInit {
           this.storage.saveUserDetails(JSON.stringify(user.data));
           this.storage.saveToken(user.token);
           this.isLoggedIn = true;
-          this.router.navigate(['Login']);
+          this.router.navigate(['login']);
       }, 
       error: error => {
           this.errorMessage = error.error.message;
