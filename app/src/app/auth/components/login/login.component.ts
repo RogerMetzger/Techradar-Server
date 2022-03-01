@@ -36,13 +36,15 @@ export class LoginComponent implements OnInit {
     if(itemForm.valid) {
       this.auth.login(this.user.email, this.user.password).subscribe({
         next: user => {
-          console.log(user);
-          this.storage.saveUserDetails(JSON.stringify(user.data));
+          console.log(user.message);
+          this.storage.saveUserDetails(user.token);
           this.storage.saveToken(user.token);
           this.isLoggedIn = true;
+          window.location.reload();
           this.router.navigate(['']);
-      }, 
-      error: error => {
+        }, 
+        error: error => {
+          console.log(error.error.message);
           this.errorMessage = error.error.message;
         }
       });
@@ -50,7 +52,9 @@ export class LoginComponent implements OnInit {
   }
 
   logout() {
+    this.isLoggedIn = false;
     this.userSession.logout();
-    this.router.navigate(['']);
+    window.location.reload();
+    this.router.navigate(['login']);
   }
 }

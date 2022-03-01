@@ -4,7 +4,7 @@ const service = new AuthenticationService();
 
 class AuthenticationHandler {
 
-    async login(req, res) {
+    async login(req, res, next) {
 
         console.log(req.body);
 
@@ -37,7 +37,7 @@ class AuthenticationHandler {
         }
     }
 
-    async register(req, res) {
+    async register(req, res, next) {
 
         console.log(req.body);
 

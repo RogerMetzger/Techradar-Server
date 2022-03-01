@@ -26,23 +26,25 @@ export class RegisterComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    if(this.userSession.isLoggedIn()) {
+    if (this.userSession.isLoggedIn()) {
       this.isLoggedIn = true;
     }
   }
 
   onSubmit(itemForm: NgForm) {
-    
-    if(itemForm.valid) {
+
+    if (itemForm.valid) {
       this.auth.register(this.user.email, this.user.password).subscribe({
         next: user => {
-          console.log(user);
-          this.storage.saveUserDetails(JSON.stringify(user.data));
+          console.log(user.message);
+          this.storage.saveUserDetails(user.token);
           this.storage.saveToken(user.token);
           this.isLoggedIn = true;
-          this.router.navigate(['login']);
-      }, 
-      error: error => {
+          window.location.reload();
+          this.router.navigate(['']);
+        },
+        error: error => {
+          console.log(error.error.message);
           this.errorMessage = error.error.message;
         }
       });

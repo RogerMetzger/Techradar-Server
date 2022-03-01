@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import jwtDecode from 'jwt-decode';
 
 const TOKEN = 'token';
 const USER_DATA = 'userData';
@@ -9,8 +10,17 @@ export class SessionStorageService {
 
   constructor() { }
 
-  saveUserDetails(data: string) {
-    sessionStorage.setItem(USER_DATA, data);
+  saveUserDetails(token: any) {
+    let decodedToken = jwtDecode<any>(token);
+    if (decodedToken) {
+      let data = {
+        email: decodedToken.email,
+        role: decodedToken.role
+      };
+      sessionStorage.setItem(USER_DATA, JSON.stringify(data));
+    } else {
+      console.error('Cannot decode token');
+    }
   }
 
   getUserDetails() {
