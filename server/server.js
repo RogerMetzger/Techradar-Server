@@ -9,24 +9,32 @@ const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./swagger.json');
 const middleware = require('./middleware');
 const { AuthenticationHandler } = require('./handlers/auth-handler');
+const { TechnologyHandler } = require('./handlers/tech-handler');
 
 function main () {
 
     const PORT = process.env.PORT || 8000;
     let server = express();
     let authHandler = new AuthenticationHandler();
+    let techHandler = new TechnologyHandler();
 
     server.use(bodyParser.urlencoded({
         extended: true
     }));
     server.use(bodyParser.json());
     server.use(cors({origin: true, credentials: true}));
-
-    server.use(require('./routes/technology'));
     
+    server.post('/user/login', authHandler.login);
+    server.post('/user/register', authHandler.register);
 
-    server.post('/user/login', authHandler.login)
-    server.post('/user/register', authHandler.register)
+    server.post('/technology', techHandler.create);
+    server.get('/technologies', techHandler.getAll);
+    server.get('/technology/:id', techHandler.getById);
+    server.delete('/technology/:id', techHandler.delete);
+    server.put('/technology/:id', techHandler.update);
+    server.put('/technology/publish/:id', techHandler.publish);
+    server.put('/technology/classify/:id', techHandler.classify);
+
     server.get('/', middleware.checkToken, authHandler.index)
     server.use('/healthcheck', require('express-healthcheck')());
     server.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
