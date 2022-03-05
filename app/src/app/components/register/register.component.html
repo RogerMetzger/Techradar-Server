@@ -28,7 +28,7 @@
                 <mat-error *ngIf="errorMessage != ''">
                     {{errorMessage}}
                 </mat-error>
-                <button mat-button [disabled]="!registerForm.valid" (click)="onSubmit(registerForm.value)">Register</button>
+                <button mat-button (click)="onSubmit(registerForm.value)">Register</button>
             </mat-card-actions>
         </form>
     </mat-card>

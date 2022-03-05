@@ -4,10 +4,12 @@ import { AdministrationComponent } from './components/administration/administrat
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { TechnologyAdministrationComponent } from './components/technology-administration/technology-administration.component';
+import { TechnologyEditComponent } from './components/technology-edit/technology-edit.component';
 
 const routes: Routes = [
   {path: 'administration', component: AdministrationComponent},
   {path: 'administration/technologies', component: TechnologyAdministrationComponent},
+  {path: 'administration/technology/:id', component: TechnologyEditComponent},
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent}
 ];

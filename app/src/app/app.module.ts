@@ -24,6 +24,9 @@ import { TechnologyAdministrationComponent } from './components/technology-admin
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
+import { TechnologyEditComponent } from './components/technology-edit/technology-edit.component';
+import { MatSelectModule } from '@angular/material/select';
+import { MatRadioModule } from '@angular/material/radio';
 
 @NgModule({
   declarations: [
@@ -32,7 +35,8 @@ import { MatSortModule } from '@angular/material/sort';
     RegisterComponent,
     NavbarComponent,
     AdministrationComponent,
-    TechnologyAdministrationComponent
+    TechnologyAdministrationComponent,
+    TechnologyEditComponent
   ],
   imports: [
     BrowserModule,
@@ -53,7 +57,9 @@ import { MatSortModule } from '@angular/material/sort';
     MatListModule,
     MatTableModule,
     MatPaginatorModule,
-    MatSortModule
+    MatSortModule,
+    MatSelectModule,
+    MatRadioModule
   ],
   providers: [
     {provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: {appearance: 'fill', floatLabel: 'always'}}
