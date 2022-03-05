@@ -1,9 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AdministrationComponent } from './components/administration/administration.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
+import { TechnologyAdministrationComponent } from './components/technology-administration/technology-administration.component';
 
 const routes: Routes = [
+  {path: 'administration', component: AdministrationComponent},
+  {path: 'administration/technologies', component: TechnologyAdministrationComponent},
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent}
 ];

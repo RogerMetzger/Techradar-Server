@@ -19,13 +19,20 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
+import { AdministrationComponent } from './components/administration/administration.component';
+import { TechnologyAdministrationComponent } from './components/technology-administration/technology-administration.component';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     RegisterComponent,
-    NavbarComponent
+    NavbarComponent,
+    AdministrationComponent,
+    TechnologyAdministrationComponent
   ],
   imports: [
     BrowserModule,
@@ -43,7 +50,10 @@ import { MatListModule } from '@angular/material/list';
     MatCardModule,
     LayoutModule,
     MatSidenavModule,
-    MatListModule
+    MatListModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule
   ],
   providers: [
     {provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: {appearance: 'fill', floatLabel: 'always'}}
