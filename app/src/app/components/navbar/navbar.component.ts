@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { Observable } from 'rxjs';
+import { map, shareReplay } from 'rxjs/operators';
 import { UserSessionService } from '../../services/user-session.service';
 import { Router } from '@angular/router';
 
@@ -7,25 +10,27 @@ import { Router } from '@angular/router';
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss']
 })
-export class NavbarComponent implements OnInit {
+export class NavbarComponent {
 
-  isLoggedIn: boolean = false;
+  isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
+    .pipe(
+      map(result => result.matches),
+      shareReplay()
+    );
 
   constructor(
+    private breakpointObserver: BreakpointObserver,
     private userSession: UserSessionService,
     private router: Router
-    ) { }
+    ) {}
 
-  ngOnInit(): void {
-    if (this.userSession.isLoggedIn()) {
-      this.isLoggedIn = true;
+    isLoggedIn = () => {
+      return this.userSession.isLoggedIn();
     }
-  }
 
-  logout() {
-    this.isLoggedIn = false;
-    this.userSession.logout();
-    this.router.navigate(['login']);
-  }
-
+    logout() {
+      this.userSession.logout();
+      window.location.reload();
+      this.router.navigate(['login']);
+    }
 }
