@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
-import { User } from '../../../models/user.model'
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { SessionStorageService } from 'src/app/services/session-storage.service';
 import { UserSessionService } from 'src/app/services/user-session.service';
 
@@ -13,7 +12,11 @@ import { UserSessionService } from 'src/app/services/user-session.service';
 })
 export class LoginComponent implements OnInit {
 
-  user = new User("", "");
+  passwordHide = true;
+  loginForm = new FormGroup({
+    email: new FormControl('', [Validators.required, Validators.email]),
+    password: new FormControl('', [Validators.required])
+  });
 
   isLoggedIn: boolean = false;
   errorMessage: string = "";
@@ -31,10 +34,10 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  onSubmit(itemForm: NgForm) {
-
-    if(itemForm.valid) {
-      this.auth.login(this.user.email, this.user.password).subscribe({
+  onSubmit(form: any) {
+    console.log(form.password);
+    if(this.loginForm.valid) {
+      this.auth.login(form.email, form.password).subscribe({
         next: user => {
           console.log(user.message);
           this.storage.saveUserDetails(user.token);
@@ -56,5 +59,9 @@ export class LoginComponent implements OnInit {
     this.userSession.logout();
     window.location.reload();
     this.router.navigate(['login']);
+  }
+
+  loginFormError = (controlName: string, errorName: string) => {
+    return this.loginForm.controls[controlName].hasError(errorName);
   }
 }

@@ -1,0 +1,40 @@
+<div *ngIf='!this.isLoggedIn'>
+    <mat-card>
+        <form [formGroup]="registerForm" class="form-container">
+            <mat-card-title>Register</mat-card-title>
+            <mat-card-content>
+                <mat-form-field>
+                    <mat-label>Enter your email</mat-label>
+                    <input type="email" matInput formControlName="email" required>
+                    <mat-error *ngIf="registerFormError('email', 'email') && !registerFormError('email', 'required')">
+                        Not a valid email
+                    </mat-error>
+                    <mat-error *ngIf="registerFormError('email', 'required')">
+                        You must enter a value
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Enter your password</mat-label>
+                    <input [type]="passwordHide ? 'password' : 'text'" matInput formControlName="password" required>
+                    <button mat-icon-button matSuffix (click)="passwordHide = !passwordHide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="passwordHide">
+                        <mat-icon>{{passwordHide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                    </button>
+                    <mat-error *ngIf="registerFormError('password', 'required')">
+                        You must enter a value
+                    </mat-error>
+                </mat-form-field>
+            </mat-card-content>
+            <mat-card-actions>
+                <mat-error *ngIf="errorMessage != ''">
+                    {{errorMessage}}
+                </mat-error>
+                <button mat-button [disabled]="!registerForm.valid" (click)="onSubmit(registerForm.value)">Register</button>
+            </mat-card-actions>
+        </form>
+    </mat-card>
+</div>
+<div *ngIf='this.isLoggedIn'>
+    <mat-card>
+        <mat-card-title>You are logged in</mat-card-title>
+    </mat-card>
+</div>

@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
-import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
-import { User } from 'src/app/models/user.model';
 import { SessionStorageService } from 'src/app/services/session-storage.service';
 import { UserSessionService } from 'src/app/services/user-session.service';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-register',
@@ -13,7 +12,11 @@ import { UserSessionService } from 'src/app/services/user-session.service';
 })
 export class RegisterComponent implements OnInit {
 
-  user = new User("", "");
+  passwordHide = true;
+  registerForm = new FormGroup({
+    email: new FormControl('', [Validators.required, Validators.email]),
+    password: new FormControl('', [Validators.required])
+  });
 
   isLoggedIn: boolean = false;
   errorMessage: string = "";
@@ -31,10 +34,12 @@ export class RegisterComponent implements OnInit {
     }
   }
 
-  onSubmit(itemForm: NgForm) {
+  onSubmit(form: any) {
 
-    if (itemForm.valid) {
-      this.auth.register(this.user.email, this.user.password).subscribe({
+    console.log(form)
+
+    if (this.registerForm.valid) {
+      this.auth.register(form.email, form.password).subscribe({
         next: user => {
           console.log(user.message);
           this.storage.saveUserDetails(user.token);
@@ -49,5 +54,9 @@ export class RegisterComponent implements OnInit {
         }
       });
     }
+  }
+
+  registerFormError = (controlName: string, errorName: string) => {
+    return this.registerForm.controls[controlName].hasError(errorName);
   }
 }
