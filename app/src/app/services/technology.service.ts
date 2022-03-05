@@ -19,4 +19,8 @@ export class TechnologyService {
   delete(id: string): Observable<any> {
     return this.http.delete(`${this.baseUrl}/technology/${id}`);
   }
+
+  create(technology: Technology): Observable<any> {
+    return this.http.post(`${this.baseUrl}/technology`, technology);
+  }
 }

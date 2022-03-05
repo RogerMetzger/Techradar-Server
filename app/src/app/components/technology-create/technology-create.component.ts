@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { TechnologyService } from 'src/app/services/technology.service';
 
 @Component({
   selector: 'app-technology-create',
@@ -7,6 +8,9 @@ import { FormBuilder, Validators } from '@angular/forms';
   styleUrls: ['./technology-create.component.scss']
 })
 export class TechnologyCreateComponent {
+
+  errorMessage: string = "";
+
   technologyForm = this.fb.group({
     name: [null, Validators.required],
     description: [null, Validators.required],
@@ -30,11 +34,20 @@ export class TechnologyCreateComponent {
     {name: 'Languages & Frameworks', value: 'Languages & Frameworks'}
   ];
 
-  constructor(private fb: FormBuilder) {}
+  constructor(
+    private fb: FormBuilder, 
+    private technologyService: TechnologyService
+    ) {}
 
-  onSubmit(): void {
+  onSubmit(form: any): void {
     if(this.technologyForm.valid) {
-      alert('Thanks!');
+      this.technologyService.create(form).subscribe({
+        next: () => window.location.reload(),
+        error: error => {
+          console.error(error);
+          this.errorMessage = error.error.message;
+        }
+      });
     }
   }
 }
