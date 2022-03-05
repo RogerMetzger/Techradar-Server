@@ -27,6 +27,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { TechnologyEditComponent } from './components/technology-edit/technology-edit.component';
 import { MatSelectModule } from '@angular/material/select';
 import { MatRadioModule } from '@angular/material/radio';
+import { TechnologyCreateComponent } from './components/technology-create/technology-create.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { MatRadioModule } from '@angular/material/radio';
     NavbarComponent,
     AdministrationComponent,
     TechnologyAdministrationComponent,
-    TechnologyEditComponent
+    TechnologyEditComponent,
+    TechnologyCreateComponent
   ],
   imports: [
     BrowserModule,

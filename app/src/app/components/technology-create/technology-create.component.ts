@@ -2,11 +2,11 @@ import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 
 @Component({
-  selector: 'app-technology-edit',
-  templateUrl: './technology-edit.component.html',
-  styleUrls: ['./technology-edit.component.scss']
+  selector: 'app-technology-create',
+  templateUrl: './technology-create.component.html',
+  styleUrls: ['./technology-create.component.scss']
 })
-export class TechnologyEditComponent {
+export class TechnologyCreateComponent {
   technologyForm = this.fb.group({
     name: [null, Validators.required],
     description: [null, Validators.required],
