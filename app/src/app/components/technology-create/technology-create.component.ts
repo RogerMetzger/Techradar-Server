@@ -19,15 +19,15 @@ export class TechnologyCreateComponent {
     classification: null
   });
 
-  categories = [
+  rings = [
+    {name: 'None', value: null},
     {name: 'Adopt', value: 'Adopt'},
     {name: 'Trial', value: 'Trial'},
     {name: 'Assess', value: 'Assess'},
     {name: 'Hold', value: 'Hold'}
   ];
 
-  rings = [
-    {name: 'None', value: null},
+  categories = [
     {name: 'Techniques', value: 'Techniques'},
     {name: 'Tools', value: 'Tools'},
     {name: 'Platforms', value: 'Platforms'},

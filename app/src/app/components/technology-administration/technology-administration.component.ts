@@ -10,7 +10,7 @@ import { TechnologyService } from 'src/app/services/technology.service';
 export class TechnologyAdministrationComponent {
 
   data: Technology[] = [];
-  displayedColumns = ['name', 'isPublic', 'category', 'ring', 'options'];
+  displayedColumns = ['name', 'category', 'ring', 'isPublic', 'options'];
 
   constructor(private technologyService: TechnologyService) {
     this.loadTechnologies();

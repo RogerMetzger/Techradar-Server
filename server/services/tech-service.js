@@ -8,7 +8,7 @@ class TechnologyService {
             name: tech.name,
             description: tech.description,
             category: tech.category,
-            ring: tech.category,
+            ring: tech.ring,
             classification: tech.classification,
             isPublic: false,
             published_at: null,
