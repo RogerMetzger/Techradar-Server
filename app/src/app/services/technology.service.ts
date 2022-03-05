@@ -29,5 +29,9 @@ export class TechnologyService {
 
   update(id: string, technology: any): Observable<any> {
     return this.http.put(`${this.baseUrl}/technology/${id}`, technology);
+  }  
+  
+  classify(id: string, technology: any): Observable<any> {
+    return this.http.put(`${this.baseUrl}/technology/classify/${id}`, technology);
   }
 }

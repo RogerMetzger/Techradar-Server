@@ -7,15 +7,15 @@ import { MatInputModule } from '@angular/material/input';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
 
-import { TechnologyCreateComponent } from './technology-create.component';
+import { TechnologyClassifyComponent } from './technology-classify.component';
 
-describe('TechnologyCreateComponent', () => {
-  let component: TechnologyCreateComponent;
-  let fixture: ComponentFixture<TechnologyCreateComponent>;
+describe('TechnologyClassifyComponent', () => {
+  let component: TechnologyClassifyComponent;
+  let fixture: ComponentFixture<TechnologyClassifyComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ TechnologyCreateComponent ],
+      declarations: [ TechnologyClassifyComponent ],
       imports: [
         NoopAnimationsModule,
         ReactiveFormsModule,
@@ -29,7 +29,7 @@ describe('TechnologyCreateComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(TechnologyCreateComponent);
+    fixture = TestBed.createComponent(TechnologyClassifyComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
