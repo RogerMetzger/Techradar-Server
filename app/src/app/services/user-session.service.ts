@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Access } from '../models/access.model';
 import { SessionStorageService } from './session-storage.service';
 
 @Injectable({
@@ -20,6 +21,15 @@ export class UserSessionService {
 
   isLoggedIn() {
     return this.getUser() != null;
+  }
+
+  canAccess(access: Access) {
+    let role = this.getRole()
+    if (role) {
+      return access.includes(role);
+    } else {
+      return false;
+    }
   }
 
   logout() {

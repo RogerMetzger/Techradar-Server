@@ -33,6 +33,7 @@ import { TechnologyCreateComponent } from './components/technology-create/techno
 import { TechnologyClassifyComponent } from './components/technology-classify/technology-classify.component';
 import { TechnologyPublishComponent } from './components/technology-publish/technology-publish.component';
 import { TechnologyViewerComponent } from './components/technology-viewer/technology-viewer.component';
+import { HomeComponent } from './components/home/home.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import { TechnologyViewerComponent } from './components/technology-viewer/techno
     TechnologyCreateComponent,
     TechnologyClassifyComponent,
     TechnologyPublishComponent,
-    TechnologyViewerComponent
+    TechnologyViewerComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,

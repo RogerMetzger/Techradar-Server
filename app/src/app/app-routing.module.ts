@@ -8,17 +8,22 @@ import { TechnologyCreateComponent } from './components/technology-create/techno
 import { TechnologyClassifyComponent } from './components/technology-classify/technology-classify.component';
 import { TechnologyPublishComponent } from './components/technology-publish/technology-publish.component';
 import { TechnologyViewerComponent } from './components/technology-viewer/technology-viewer.component';
+import { HomeComponent } from './components/home/home.component';
+import { AuthGuard } from './guards/auth.guard';
+import { Access } from './models/access.model';
 
 const routes: Routes = [
-  {path: '', component: TechnologyViewerComponent},
-  {path: 'administration', component: TechnologyAdministrationComponent},
-  {path: 'administration/technologies', component: TechnologyAdministrationComponent},
-  {path: 'administration/technology/create', component: TechnologyCreateComponent},
-  {path: 'administration/technology/edit/:id', component: TechnologyEditComponent},
-  {path: 'administration/technology/classify/:id', component: TechnologyClassifyComponent},
-  {path: 'administration/technology/publish/:id', component: TechnologyPublishComponent},
+  {path: '', component: HomeComponent},
+  {path: 'viewer', component: TechnologyViewerComponent, canActivate: [AuthGuard]},
+  {path: 'administration', component: TechnologyAdministrationComponent, canActivate: [AuthGuard], data: {access: Access.READ}},
+  {path: 'administration/technologies', component: TechnologyAdministrationComponent, data: {access: Access.READ}},
+  {path: 'administration/technology/create', component: TechnologyCreateComponent, canActivate: [AuthGuard], data: {access: Access.CREATE}},
+  {path: 'administration/technology/edit/:id', component: TechnologyEditComponent, canActivate: [AuthGuard], data: {access: Access.UPDATE}},
+  {path: 'administration/technology/classify/:id', component: TechnologyClassifyComponent, canActivate: [AuthGuard], data: {access: Access.UPDATE}},
+  {path: 'administration/technology/publish/:id', component: TechnologyPublishComponent, canActivate: [AuthGuard], data: {access: Access.PUBLISH}},
   {path: 'login', component: LoginComponent},
-  {path: 'register', component: RegisterComponent}
+  {path: 'register', component: RegisterComponent},
+  {path: '**', component: HomeComponent}
 ];
 
 @NgModule({

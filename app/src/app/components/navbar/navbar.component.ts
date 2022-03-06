@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { UserSessionService } from '../../services/user-session.service';
 import { Router } from '@angular/router';
+import { Access } from 'src/app/models/access.model';
 
 @Component({
   selector: 'app-navbar',
@@ -24,13 +25,17 @@ export class NavbarComponent {
     private router: Router
     ) {}
 
-    isLoggedIn = () => {
-      return this.userSession.isLoggedIn();
-    }
+  isLoggedIn = () => {
+    return this.userSession.isLoggedIn();
+  }
 
-    logout() {
-      this.userSession.logout();
-      window.location.reload();
-      this.router.navigate(['login']);
-    }
+  canAccess = () => {
+    return this.userSession.canAccess(Access.READ);
+  }
+
+  logout() {
+    this.userSession.logout();
+    window.location.reload();
+    this.router.navigate(['']);
+  }
 }

@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
+import { Access } from 'src/app/models/access.model';
 import { Technology } from 'src/app/models/technology.model';
 import { TechnologyService } from 'src/app/services/technology.service';
+import { UserSessionService } from 'src/app/services/user-session.service';
 
 @Component({
   selector: 'app-technology-administration',
@@ -9,10 +11,13 @@ import { TechnologyService } from 'src/app/services/technology.service';
 })
 export class TechnologyAdministrationComponent {
 
+  canDelete = Access.DELETE;
+  canPublish = Access.PUBLISH;
+  
   data: Technology[] = [];
   displayedColumns = ['name', 'category', 'ring', 'isPublic', 'options'];
 
-  constructor(private technologyService: TechnologyService) {
+  constructor(private technologyService: TechnologyService, private userSession: UserSessionService) {
     this.loadTechnologies();
   }
 
@@ -23,16 +28,8 @@ export class TechnologyAdministrationComponent {
     });
   }
 
-  edit(id: any) {
-    console.log(id);
-  }
-
-  publish(id: any) {
-    console.log(id);
-  }
-
-  classify(id: any) {
-    console.log(id);
+  canAccess = (access: Access) => {
+    return this.userSession.canAccess(access);
   }
 
   delete(id: string) {
