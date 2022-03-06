@@ -27,13 +27,13 @@ function main () {
     server.post('/user/login', authHandler.login);
     server.post('/user/register', authHandler.register);
 
-    server.post('/technology', middleware.checkToken, middleware.canCreate, techHandler.create);
+    server.post('/technology', middleware.checkToken, middleware.canCreate, middleware.logger, techHandler.create);
     server.get('/technologies', middleware.checkToken, techHandler.getAll);
-    server.get('/technology/:id', middleware.checkToken, middleware.canRead, techHandler.getById);
-    server.delete('/technology/:id', middleware.checkToken, middleware.canDelete, techHandler.delete);
-    server.put('/technology/:id', middleware.checkToken, middleware.canUpdate, techHandler.update);
-    server.put('/technology/publish/:id', middleware.checkToken, middleware.canPublish, techHandler.publish);
-    server.put('/technology/classify/:id', middleware.checkToken, middleware.canUpdate, techHandler.classify);
+    server.get('/technology/:id', middleware.checkToken, middleware.canRead, middleware.logger, techHandler.getById);
+    server.delete('/technology/:id', middleware.checkToken, middleware.canDelete, middleware.logger, techHandler.delete);
+    server.put('/technology/:id', middleware.checkToken, middleware.canUpdate, middleware.logger, techHandler.update);
+    server.put('/technology/publish/:id', middleware.checkToken, middleware.canPublish, middleware.logger, techHandler.publish);
+    server.put('/technology/classify/:id', middleware.checkToken, middleware.canUpdate, middleware.logger, techHandler.classify);
 
     server.use('/healthcheck', require('express-healthcheck')());
     server.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));

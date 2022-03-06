@@ -1,6 +1,8 @@
 let jwt = require('jsonwebtoken');
 const { UserService } = require('./services/user-service');
 const userService = new UserService();
+const { LoggerService } = require('./services/logger-service');
+const loggerService = new LoggerService();
 
 const access = {
     READ: ['CEO', 'Techlead'],
@@ -119,6 +121,21 @@ async function isAuthorized(req, access) {
     return (access.includes(user.role));
 }
 
+let logger = async (req, res, next) => {
+    let token = req.headers['authorization'];
+    let email = '';
+    if (token) {
+        if (token.startsWith('Bearer ')) {
+            // Remove Bearer from string
+            token = token.slice(7, token.length);
+        }
+        email = jwt.decode(token).email;
+    }
+    let fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
+    loggerService.logAdministrationAccess(new Date(), email, fullUrl, req.method, req.body);
+    next();
+}
+
 module.exports = {
     checkToken: checkToken,
     canRead: canRead,
@@ -126,5 +143,6 @@ module.exports = {
     canUpdate: canUpdate,
     canDelete: canDelete,
     canPublish: canPublish,
-    canManage: canManage
+    canManage: canManage,
+    logger: logger
 };
