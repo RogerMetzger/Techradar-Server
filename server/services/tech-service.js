@@ -1,4 +1,4 @@
-const objectId = require("mongodb").ObjectId;
+const { ObjectId } = require("mongodb");
 const dbo = require('../database/connection');
 
 class TechnologyService {
@@ -26,55 +26,70 @@ class TechnologyService {
     }
 
     async getById(id) {
-        const query = {_id: objectId(id)};
-        return await this.getCollection().findOne(query);
+        if(ObjectId.isValid(id)) {
+            const query = {_id: ObjectId(id)};
+            return await this.getCollection().findOne(query);
+        }
+        return null;
     }
 
     async delete(id) {
-        const query = {_id: objectId(id)};
-        return await this.getCollection().deleteOne(query);
+        if(ObjectId.isValid(id)) {
+            const query = {_id: ObjectId(id)};
+            return await this.getCollection().deleteOne(query);
+        }
+        return null;
     }
 
     async update(id, tech, user) {
-        const query = {_id: objectId(id)};
-        const updates = {
-            $set: {
-                name: tech.name,
-                description: tech.description,
-                category: tech.category,
-                updated_by: this.getUserDocument(user),
-                updated_at: new Date()
-            }
-        };
-        return await this.getCollection().updateOne(query, updates);
+        if(ObjectId.isValid(id)) {
+            const query = {_id: ObjectId(id)};
+            const updates = {
+                $set: {
+                    name: tech.name,
+                    description: tech.description,
+                    category: tech.category,
+                    updated_by: this.getUserDocument(user),
+                    updated_at: new Date()
+                }
+            };
+            return await this.getCollection().updateOne(query, updates);
+        }
+        return null;
     }
 
     async publish(id, tech, user) {
-        const query = {_id: objectId(id)};
-        const updates = {
-            $set: {
-                ring: tech.ring,
-                classification: tech.classification,
-                isPublic: true,
-                published_at: new Date(),
-                updated_by: this.getUserDocument(user),
-                updated_at: new Date()
-            }
-        };
-        return await this.getCollection().updateOne(query, updates);
+        if(ObjectId.isValid(id)) {
+            const query = {_id: ObjectId(id)};
+            const updates = {
+                $set: {
+                    ring: tech.ring,
+                    classification: tech.classification,
+                    isPublic: true,
+                    published_at: new Date(),
+                    updated_by: this.getUserDocument(user),
+                    updated_at: new Date()
+                }
+            };
+            return await this.getCollection().updateOne(query, updates);
+        }
+        return null;
     }
 
     async classify(id, tech, user) {
-        const query = {_id: objectId(id)};
-        const updates = {
-            $set: {
-                ring: tech.ring,
-                classification: tech.classification,
-                updated_by: this.getUserDocument(user),
-                updated_at: new Date()
-            }
-        };
-        return await this.getCollection().updateOne(query, updates);
+        if(ObjectId.isValid(id)) {
+            const query = {_id: ObjectId(id)};
+            const updates = {
+                $set: {
+                    ring: tech.ring,
+                    classification: tech.classification,
+                    updated_by: this.getUserDocument(user),
+                    updated_at: new Date()
+                }
+            };
+            return await this.getCollection().updateOne(query, updates);
+        }
+        return null;
     }
 
     getUserDocument(user) {
