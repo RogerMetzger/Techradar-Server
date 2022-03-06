@@ -15,7 +15,7 @@ export class TechnologyCreateComponent {
     name: [null, Validators.required],
     description: [null, Validators.required],
     category: [null, Validators.required],
-    ring: 'None',
+    ring: null,
     classification: null
   });
 

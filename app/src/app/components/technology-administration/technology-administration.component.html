@@ -48,14 +48,14 @@
         <button mat-button routerLink="/administration/technology/edit/{{row._id}}" aria-label="Edit" title="Edit">
           <mat-icon>edit</mat-icon>
         </button>
-        <button mat-button [disabled]="row.isPublic" (click)="publish(row._id)" aria-label="publish" title="Publish">
-          <mat-icon>publish</mat-icon>
-        </button>
         <button mat-button routerLink="/administration/technology/classify/{{row._id}}" aria-label="Classify" title="Classify">
-          <mat-icon>flag</mat-icon>
+          <mat-icon>military_tech</mat-icon>
+        </button>
+        <button mat-button [disabled]="row.isPublic" routerLink="/administration/technology/publish/{{row._id}}" aria-label="publish" title="Publish">
+          <mat-icon>check_circle_outline</mat-icon>
         </button>
         <button mat-button (click)="delete(row._id)" aria-label="Delete" title="Delete">
-          <mat-icon>delete</mat-icon>
+          <mat-icon>delete_forever</mat-icon>
         </button>
       </td>
     </ng-container>

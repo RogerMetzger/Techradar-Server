@@ -33,5 +33,9 @@ export class TechnologyService {
   
   classify(id: string, technology: any): Observable<any> {
     return this.http.put(`${this.baseUrl}/technology/classify/${id}`, technology);
+  }  
+  
+  publish(id: string, technology: any): Observable<any> {
+    return this.http.put(`${this.baseUrl}/technology/publish/${id}`, technology);
   }
 }

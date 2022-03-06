@@ -29,6 +29,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatRadioModule } from '@angular/material/radio';
 import { TechnologyCreateComponent } from './components/technology-create/technology-create.component';
 import { TechnologyClassifyComponent } from './components/technology-classify/technology-classify.component';
+import { TechnologyPublishComponent } from './components/technology-publish/technology-publish.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { TechnologyClassifyComponent } from './components/technology-classify/te
     TechnologyAdministrationComponent,
     TechnologyEditComponent,
     TechnologyCreateComponent,
-    TechnologyClassifyComponent
+    TechnologyClassifyComponent,
+    TechnologyPublishComponent
   ],
   imports: [
     BrowserModule,
