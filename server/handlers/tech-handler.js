@@ -1,11 +1,15 @@
 const { TechnologyService } = require("../services/tech-service");
+const { UserService } = require('../services/user-service');
 
 const service = new TechnologyService();
+const userService = new UserService();
 
 class TechnologyHandler {
 
     async create(req, res) {
-        let result = await service.create(req.body);
+        let token = req.headers['authorization'];
+        let user = await userService.getUserFromToken(token);
+        let result = await service.create(req.body, user);
 
         if (result) {
             console.log('Create technology successful');
@@ -57,7 +61,9 @@ class TechnologyHandler {
     }
 
     async update(req, res) {
-        let result = await service.update(req.params.id, req.body);
+        let token = req.headers['authorization'];
+        let user = await userService.getUserFromToken(token);
+        let result = await service.update(req.params.id, req.body, user);
 
         if (result) {
             console.log('Technology updated');
@@ -70,7 +76,9 @@ class TechnologyHandler {
     }
 
     async publish(req, res) {
-        let result = await service.publish(req.params.id, req.body);
+        let token = req.headers['authorization'];
+        let user = await userService.getUserFromToken(token);
+        let result = await service.publish(req.params.id, req.body, user);
 
         if (result) {
             console.log('Technology published');
@@ -83,7 +91,9 @@ class TechnologyHandler {
     }
 
     async classify(req, res) {
-        let result = await service.classify(req.params.id, req.body);
+        let token = req.headers['authorization'];
+        let user = await userService.getUserFromToken(token);
+        let result = await service.classify(req.params.id, req.body, user);
 
         if (result) {
             console.log('Technology classified');

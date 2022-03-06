@@ -3,7 +3,7 @@ const dbo = require('../database/connection');
 
 class TechnologyService {
 
-    async create(tech) {
+    async create(tech, user) {
         const document = {
             name: tech.name,
             description: tech.description,
@@ -12,9 +12,9 @@ class TechnologyService {
             classification: tech.classification,
             isPublic: false,
             published_at: null,
-            created_by: tech.created_by,
+            created_by: this.getUserDocument(user),
             created_at: new Date(),
-            updated_by: tech.created_by,
+            updated_by: this.getUserDocument(user),
             updated_at: new Date()
         };
 
@@ -35,21 +35,21 @@ class TechnologyService {
         return await this.getCollection().deleteOne(query);
     }
 
-    async update(id, tech) {
+    async update(id, tech, user) {
         const query = {_id: objectId(id)};
         const updates = {
             $set: {
                 name: tech.name,
                 description: tech.description,
                 category: tech.category,
-                updated_by: tech.updated_by,
+                updated_by: this.getUserDocument(user),
                 updated_at: new Date()
             }
         };
         return await this.getCollection().updateOne(query, updates);
     }
 
-    async publish(id, tech) {
+    async publish(id, tech, user) {
         const query = {_id: objectId(id)};
         const updates = {
             $set: {
@@ -57,24 +57,32 @@ class TechnologyService {
                 classification: tech.classification,
                 isPublic: true,
                 published_at: new Date(),
-                updated_by: tech.updated_by,
+                updated_by: this.getUserDocument(user),
                 updated_at: new Date()
             }
         };
         return await this.getCollection().updateOne(query, updates);
     }
 
-    async classify(id, tech) {
+    async classify(id, tech, user) {
         const query = {_id: objectId(id)};
         const updates = {
             $set: {
                 ring: tech.ring,
                 classification: tech.classification,
-                updated_by: tech.updated_by,
+                updated_by: this.getUserDocument(user),
                 updated_at: new Date()
             }
         };
         return await this.getCollection().updateOne(query, updates);
+    }
+
+    getUserDocument(user) {
+        return {
+            _id: user._id,
+            email: user.email,
+            role: user.role
+        };
     }
 
     getCollection() {
