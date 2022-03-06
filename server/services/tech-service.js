@@ -15,7 +15,8 @@ class TechnologyService {
             created_by: this.getUserDocument(user),
             created_at: new Date(),
             updated_by: this.getUserDocument(user),
-            updated_at: new Date()
+            updated_at: new Date(),
+            history: []
         };
 
         return await this.getCollection().insertOne(document);
@@ -44,13 +45,20 @@ class TechnologyService {
     async update(id, tech, user) {
         if(ObjectId.isValid(id)) {
             const query = {_id: ObjectId(id)};
+            let oldTechnology = await this.getOldTechnology(id);
             const updates = {
                 $set: {
                     name: tech.name,
                     description: tech.description,
                     category: tech.category,
                     updated_by: this.getUserDocument(user),
-                    updated_at: new Date()
+                    updated_at: new Date(),
+                },
+                $push: {
+                    history: {
+                        $each: [oldTechnology],
+                        $position: 0
+                    }
                 }
             };
             return await this.getCollection().updateOne(query, updates);
@@ -61,6 +69,7 @@ class TechnologyService {
     async publish(id, tech, user) {
         if(ObjectId.isValid(id)) {
             const query = {_id: ObjectId(id)};
+            let oldTechnology = await this.getOldTechnology(id);
             const updates = {
                 $set: {
                     ring: tech.ring,
@@ -69,6 +78,12 @@ class TechnologyService {
                     published_at: new Date(),
                     updated_by: this.getUserDocument(user),
                     updated_at: new Date()
+                },
+                $push: {
+                    history: {
+                        $each: [oldTechnology],
+                        $position: 0
+                    }
                 }
             };
             return await this.getCollection().updateOne(query, updates);
@@ -79,17 +94,30 @@ class TechnologyService {
     async classify(id, tech, user) {
         if(ObjectId.isValid(id)) {
             const query = {_id: ObjectId(id)};
+            let oldTechnology = await this.getOldTechnology(id);
             const updates = {
                 $set: {
                     ring: tech.ring,
                     classification: tech.classification,
                     updated_by: this.getUserDocument(user),
                     updated_at: new Date()
+                },
+                $push: {
+                    history: {
+                        $each: [oldTechnology],
+                        $position: 0
+                    }
                 }
             };
             return await this.getCollection().updateOne(query, updates);
         }
         return null;
+    }
+
+    async getOldTechnology(id) {
+        let oldTechnology = await this.getById(id);
+        oldTechnology.history = [];
+        return oldTechnology;
     }
 
     getUserDocument(user) {
