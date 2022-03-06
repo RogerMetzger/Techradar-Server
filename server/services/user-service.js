@@ -1,4 +1,4 @@
-
+let jwt = require('jsonwebtoken');
 const dbo = require('../database/connection');
 
 class UserService {
@@ -32,6 +32,19 @@ class UserService {
         const collection = dbConnect.collection('Users');
         const result = await collection.insertOne(userDocument);
         return result;
+    }
+
+    async getUserFromToken(token) {
+        if (token) {
+            if (token.startsWith('Bearer ')) {
+                // Remove Bearer from string
+                token = token.slice(7, token.length);
+            }
+            let email = jwt.decode(token).email;
+            return await this.getByEmail(email);
+        } else {
+            return null;
+        }
     }
 }
 

@@ -27,13 +27,13 @@ function main () {
     server.post('/user/login', authHandler.login);
     server.post('/user/register', authHandler.register);
 
-    server.post('/technology', middleware.checkToken, techHandler.create);
+    server.post('/technology', middleware.checkToken, middleware.canCreate, techHandler.create);
     server.get('/technologies', middleware.checkToken, techHandler.getAll);
-    server.get('/technology/:id', middleware.checkToken, techHandler.getById);
-    server.delete('/technology/:id', middleware.checkToken, techHandler.delete);
-    server.put('/technology/:id', middleware.checkToken, techHandler.update);
-    server.put('/technology/publish/:id', middleware.checkToken, techHandler.publish);
-    server.put('/technology/classify/:id', middleware.checkToken, techHandler.classify);
+    server.get('/technology/:id', middleware.checkToken, middleware.canRead, techHandler.getById);
+    server.delete('/technology/:id', middleware.checkToken, middleware.canDelete, techHandler.delete);
+    server.put('/technology/:id', middleware.checkToken, middleware.canUpdate, techHandler.update);
+    server.put('/technology/publish/:id', middleware.checkToken, middleware.canPublish, techHandler.publish);
+    server.put('/technology/classify/:id', middleware.checkToken, middleware.canUpdate, techHandler.classify);
 
     server.use('/healthcheck', require('express-healthcheck')());
     server.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
