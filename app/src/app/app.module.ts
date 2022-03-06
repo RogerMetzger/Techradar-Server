@@ -27,9 +27,12 @@ import { MatSortModule } from '@angular/material/sort';
 import { TechnologyEditComponent } from './components/technology-edit/technology-edit.component';
 import { MatSelectModule } from '@angular/material/select';
 import { MatRadioModule } from '@angular/material/radio';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatExpansionModule } from '@angular/material/expansion';
 import { TechnologyCreateComponent } from './components/technology-create/technology-create.component';
 import { TechnologyClassifyComponent } from './components/technology-classify/technology-classify.component';
 import { TechnologyPublishComponent } from './components/technology-publish/technology-publish.component';
+import { TechnologyViewerComponent } from './components/technology-viewer/technology-viewer.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +45,8 @@ import { TechnologyPublishComponent } from './components/technology-publish/tech
     TechnologyEditComponent,
     TechnologyCreateComponent,
     TechnologyClassifyComponent,
-    TechnologyPublishComponent
+    TechnologyPublishComponent,
+    TechnologyViewerComponent
   ],
   imports: [
     BrowserModule,
@@ -65,7 +69,9 @@ import { TechnologyPublishComponent } from './components/technology-publish/tech
     MatPaginatorModule,
     MatSortModule,
     MatSelectModule,
-    MatRadioModule
+    MatRadioModule,
+    MatTabsModule,
+    MatExpansionModule
   ],
   providers: [
     {provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: {appearance: 'fill', floatLabel: 'always'}}

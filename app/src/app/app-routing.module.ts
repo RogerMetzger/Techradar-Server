@@ -7,8 +7,10 @@ import { TechnologyEditComponent } from './components/technology-edit/technology
 import { TechnologyCreateComponent } from './components/technology-create/technology-create.component';
 import { TechnologyClassifyComponent } from './components/technology-classify/technology-classify.component';
 import { TechnologyPublishComponent } from './components/technology-publish/technology-publish.component';
+import { TechnologyViewerComponent } from './components/technology-viewer/technology-viewer.component';
 
 const routes: Routes = [
+  {path: '', component: TechnologyViewerComponent},
   {path: 'administration', component: TechnologyAdministrationComponent},
   {path: 'administration/technologies', component: TechnologyAdministrationComponent},
   {path: 'administration/technology/create', component: TechnologyCreateComponent},
