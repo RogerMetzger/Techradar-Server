@@ -5,9 +5,6 @@ const service = new AuthenticationService();
 class AuthenticationHandler {
 
     async login(req, res, next) {
-
-        console.log(req.body);
-
         let email = req.body.email;
         let password = req.body.password;
 
@@ -38,9 +35,6 @@ class AuthenticationHandler {
     }
 
     async register(req, res, next) {
-
-        console.log(req.body);
-
         let email = req.body.email;
         let password = req.body.password;
 
@@ -67,13 +61,6 @@ class AuthenticationHandler {
                 message: 'Registration failed! Please check the request'
             });
         }
-    }
-
-    index (req, res) {
-        res.json({
-            success: true,
-            message: 'Index page'
-        })
     }
 }
 

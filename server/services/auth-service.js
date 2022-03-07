@@ -6,7 +6,6 @@ const userService = new UserService();
 class AuthenticationService {
 
     async login(email, password) {
-
         let token = null;
 
         if (email && password) {
@@ -38,8 +37,8 @@ class AuthenticationService {
             if (!user) {
                 let hashedPassword = md5(password.toString());
                 let result = await userService.addUser(email, hashedPassword, 'User');
-                console.log(result);
                 if (result) {
+
                     token = jwt.sign(
                         {email: email, role: 'User'},
                         process.env.JWT_SECRET,

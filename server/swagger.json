@@ -2,8 +2,8 @@
     "swagger": "2.0",
     "info": {
         "version": "1.0.0",
-        "title": "Techradar Project CRUD",
-        "description": "Techradar Application API"
+        "title": "Techradar Project API",
+        "description": "API for the Techradar Application"
     },
     "host": "localhost:8000",
     "basePath": "/",
@@ -27,11 +27,78 @@
         "application/json"
     ],
     "paths": {
+        "/login": {
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Login User to system",
+                "description": "Login User to system",
+                "parameters": [
+                    {
+                        "name": "login",
+                        "in": "body",
+                        "description": "login information to system",
+                        "schema": {
+                            "$ref": "#/definitions/User"
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Login successful"
+                    },
+                    "400": {
+                        "description": "Login information incorrect"
+                    },
+                    "403": {
+                        "description": "Authentication failed"
+                    }
+                }
+            }
+        },
+        "/register": {
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Register new User",
+                "description": "Register new User",
+                "parameters": [
+                    {
+                        "name": "register",
+                        "in": "body",
+                        "description": "register information to system",
+                        "schema": {
+                            "$ref": "#/definitions/User"
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Registration successful"
+                    },
+                    "400": {
+                        "description": "Registration information incorrect"
+                    },
+                    "403": {
+                        "description": "Registration failed"
+                    }
+                }
+            }
+        },
         "/technology": {
             "post": {
                 "tags": [
                     "Technology"
                 ],
+                "summary": "Create new technology in system",
                 "description": "Create new technology in system",
                 "parameters": [
                     {
@@ -47,11 +114,11 @@
                     "application/json"
                 ],
                 "responses": {
-                    "200": {
-                        "description": "New technology is created",
-                        "schema": {
-                            "$ref": "#/definitions/Technology"
-                        }
+                    "201": {
+                        "description": "Create technology successful"
+                    },
+                    "404": {
+                        "description": "Create technology failed"
                     }
                 }
             }
@@ -64,10 +131,13 @@
                 "summary": "Get all technologies in system",
                 "responses": {
                     "200": {
-                        "description": "OK",
+                        "description": "Get all technologies successful",
                         "schema": {
                             "$ref": "#/definitions/Technologies"
                         }
+                    },
+                    "404": {
+                        "description": "Get all technologies failed"
                     }
                 }
             }
@@ -79,20 +149,23 @@
                     "in": "path",
                     "required": true,
                     "description": "ID of technology that we want to find",
-                    "type": "integer"
+                    "type": "string"
                 }
             ],
             "get": {
                 "tags": [
                     "Technology"
                 ],
-                "summary": "Get the technology",
+                "summary": "Get technology with given ID",
                 "responses": {
                     "200": {
-                        "description": "OK",
+                        "description": "Get technology successful",
                         "schema": {
                             "$ref": "#/definitions/Technology"
                         }
+                    },
+                    "404": {
+                        "description": "Get technology failed"
                     }
                 }
             },
@@ -103,10 +176,10 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Technology is deleted",
-                        "schema": {
-                            "$ref": "#/definitions/Technology"
-                        }
+                        "description": "Delete technology successful"
+                    },
+                    "404": {
+                        "description": "Delete technology failed"
                     }
                 }
             },
@@ -127,10 +200,10 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Technology is updated",
-                        "schema": {
-                            "$ref": "#/definitions/Technology"
-                        }
+                        "description": "Update technology successful"
+                    },
+                    "404": {
+                        "description": "Update technology failed"
                     }
                 }
             }
@@ -142,7 +215,7 @@
                     "in": "path",
                     "required": true,
                     "description": "ID of technology that we want to publish",
-                    "type": "integer"
+                    "type": "string"
                 }
             ],
             "put": {
@@ -162,10 +235,10 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Technology is published",
-                        "schema": {
-                            "$ref": "#/definitions/Technology"
-                        }
+                        "description": "Publish technology successful"
+                    },
+                    "404": {
+                        "description": "Publish technology failed"
                     }
                 }
             }
@@ -177,7 +250,7 @@
                     "in": "path",
                     "required": true,
                     "description": "ID of technology that we want to classify",
-                    "type": "integer"
+                    "type": "string"
                 }
             ],
             "put": {
@@ -197,18 +270,33 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Technology is classified",
-                        "schema": {
-                            "$ref": "#/definitions/Technology"
-                        }
+                        "description": "Classify technology successful"
+                    },
+                    "404": {
+                        "description": "Classify technology failed"
                     }
                 }
             }
         }
     },
     "definitions": {
+        "User": {
+            "required": [
+                "email",
+                "password"
+            ],
+            "properties": {
+                "email": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                }
+            }
+        },
         "Technology": {
             "required": [
+                "_id",
                 "name",
                 "description",
                 "category",
@@ -217,6 +305,9 @@
                 "created_at"
             ],
             "properties": {
+                "_id": {
+                    "type": "string"
+                },
                 "name": {
                     "type": "string"
                 },
@@ -236,18 +327,52 @@
                     "type": "boolean"
                 },
                 "published_at": {
-                    "type": "string"
+                    "type": "string",
+                    "format": "date-time"
                 },
                 "created_by": {
-                    "type": "integer"
+                    "type": "object",
+                    "$ref": "#/definitions/updateCreateUser"
                 },
                 "created_at": {
-                    "type": "string"
+                    "type": "string",
+                    "format": "date-time"
                 },
                 "updated_by": {
-                    "type": "integer"
+                    "type": "object",
+                    "$ref": "#/definitions/updateCreateUser"
                 },
                 "updated_at": {
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "history": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "$ref": "#/definitions/Technology"
+                    }
+                }
+            }
+        },
+        "Technologies": {
+            "type": "array",
+            "$ref": "#/definitions/Technology"
+        },
+        "updateCreateUser": {
+            "required": [
+                "_id",
+                "email",
+                "role"
+            ],
+            "properties": {
+                "_id": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "role": {
                     "type": "string"
                 }
             }
@@ -256,8 +381,7 @@
             "required": [
                 "name",
                 "description",
-                "category",
-                "created_by"
+                "category"
             ],
             "properties": {
                 "name": {
@@ -274,27 +398,6 @@
                 },
                 "classification": {
                     "type": "string"
-                },
-                "created_by": {
-                    "type": "integer"
-                }
-            }
-        },
-        "publishTechnology": {
-            "required": [
-                "ring",
-                "classification",
-                "updated_by"
-            ],
-            "properties": {
-                "ring": {
-                    "type": "string"
-                },
-                "classification": {
-                    "type": "string"
-                },
-                "updated_by": {
-                    "type": "integer"
                 }
             }
         },
@@ -302,8 +405,7 @@
             "required": [
                 "name",
                 "description",
-                "category",
-                "updated_by"
+                "category"
             ],
             "properties": {
                 "name": {
@@ -314,17 +416,13 @@
                 },
                 "category": {
                     "type": "string"
-                },
-                "updated_by": {
-                    "type": "integer"
                 }
             }
         },
-        "updateClassification": {
+        "publishTechnology": {
             "required": [
                 "ring",
-                "classification",
-                "updated_by"
+                "classification"
             ],
             "properties": {
                 "ring": {
@@ -332,15 +430,22 @@
                 },
                 "classification": {
                     "type": "string"
-                },
-                "updated_by": {
-                    "type": "integer"
                 }
             }
         },
-        "Technologies": {
-            "type": "array",
-            "$ref": "#/definitions/Technology"
+        "updateClassification": {
+            "required": [
+                "ring",
+                "classification"
+            ],
+            "properties": {
+                "ring": {
+                    "type": "string"
+                },
+                "classification": {
+                    "type": "string"
+                }
+            }
         }
     }
 }

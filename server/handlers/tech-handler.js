@@ -51,7 +51,7 @@ class TechnologyHandler {
         let result = await service.delete(req.params.id);
         
         if (result) {
-            console.log('Technology deleted');
+            console.log('Delete technology successful');
             res.send(result);
         } else {
             console.log('Delete technology failed');
@@ -66,7 +66,7 @@ class TechnologyHandler {
         let result = await service.update(req.params.id, req.body, user);
 
         if (result) {
-            console.log('Technology updated');
+            console.log('Update technology successful');
             res.send(result);
         } else {
             console.log('Update technology failed');
@@ -81,7 +81,7 @@ class TechnologyHandler {
         let result = await service.publish(req.params.id, req.body, user);
 
         if (result) {
-            console.log('Technology published');
+            console.log('Publish technology successful');
             res.send(result);
         } else {
             console.log('Publish technology failed');
@@ -96,7 +96,7 @@ class TechnologyHandler {
         let result = await service.classify(req.params.id, req.body, user);
 
         if (result) {
-            console.log('Technology classified');
+            console.log('Classify technology successful');
             res.send(result);
         } else {
             console.log('Classify technology failed');
