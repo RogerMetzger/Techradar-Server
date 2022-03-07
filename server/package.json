@@ -15,7 +15,10 @@
     "NodeJS",
     "Techradar",
     "WEBLAB",
-    "Express"
+    "Express",
+    "MongoDB",
+    "SwaggerUI",
+    "JWT"
   ],
   "author": "Roger Metzger",
   "license": "ISC",

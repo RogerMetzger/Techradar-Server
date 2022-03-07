@@ -18,15 +18,15 @@ function main () {
     let authHandler = new AuthenticationHandler();
     let techHandler = new TechnologyHandler();
 
-    server.use(bodyParser.urlencoded({
-        extended: true
-    }));
+    server.use(bodyParser.urlencoded({extended: true}));
     server.use(bodyParser.json());
     server.use(cors({origin: true, credentials: true}));
     
+    // User
     server.post('/user/login', authHandler.login);
     server.post('/user/register', authHandler.register);
 
+    // Technology
     server.post('/technology', middleware.checkToken, middleware.canCreate, middleware.logger, techHandler.create);
     server.get('/technologies', middleware.checkToken, techHandler.getAll);
     server.get('/technology/:id', middleware.checkToken, middleware.canRead, middleware.logger, techHandler.getById);
@@ -35,11 +35,11 @@ function main () {
     server.put('/technology/publish/:id', middleware.checkToken, middleware.canPublish, middleware.logger, techHandler.publish);
     server.put('/technology/classify/:id', middleware.checkToken, middleware.canUpdate, middleware.logger, techHandler.classify);
 
+    // Other
     server.use('/healthcheck', require('express-healthcheck')());
     server.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
     //error handling
-
     const logErrors = (err, req, res, next) => {
         console.error(err.stack);
         next(err);
@@ -62,7 +62,7 @@ function main () {
     server.use(clientErrorHandler);
     server.use(errorHandler);
 
-
+    // Database connect
     dbo.connectToServer(function (err) {
         if (err) {
             console.error(err);

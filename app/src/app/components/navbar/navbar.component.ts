@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { UserSessionService } from '../../services/user-session.service';
 import { Router } from '@angular/router';
-import { Access } from 'src/app/models/access.model';
+import { Permission } from 'src/app/models/permission.model';
 
 @Component({
   selector: 'app-navbar',
@@ -30,7 +30,7 @@ export class NavbarComponent {
   }
 
   canAccess = () => {
-    return this.userSession.canAccess(Access.READ);
+    return this.userSession.canAccess(Permission.READ);
   }
 
   logout() {

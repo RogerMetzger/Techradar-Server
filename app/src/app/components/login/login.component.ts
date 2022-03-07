@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
@@ -10,7 +10,7 @@ import { UserSessionService } from 'src/app/services/user-session.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent {
 
   passwordHide = true;
   loginForm = new FormGroup({
@@ -18,7 +18,6 @@ export class LoginComponent implements OnInit {
     password: new FormControl('', [Validators.required])
   });
 
-  isLoggedIn: boolean = false;
   errorMessage: string = "";
 
   constructor(
@@ -28,12 +27,6 @@ export class LoginComponent implements OnInit {
     private router: Router
     ) { }
 
-  ngOnInit(): void {
-    if (this.userSession.isLoggedIn()) {
-      this.isLoggedIn = true;
-    }
-  }
-
   onSubmit(form: any) {
     if(this.loginForm.valid) {
       this.auth.login(form.email, form.password).subscribe({
@@ -41,7 +34,6 @@ export class LoginComponent implements OnInit {
           console.log(user.message);
           this.storage.saveUserDetails(user.token);
           this.storage.saveToken(user.token);
-          this.isLoggedIn = true;
           this.router.navigate(['']);
         }, 
         error: error => {
@@ -52,8 +44,11 @@ export class LoginComponent implements OnInit {
     }
   }
 
+  isLoggedIn = () => {
+    return this.userSession.isLoggedIn();
+  }
+
   logout() {
-    this.isLoggedIn = false;
     this.userSession.logout();
     this.router.navigate(['']);
   }

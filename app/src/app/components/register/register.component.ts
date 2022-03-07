@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
 import { SessionStorageService } from 'src/app/services/session-storage.service';
@@ -10,7 +10,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss']
 })
-export class RegisterComponent implements OnInit {
+export class RegisterComponent {
 
   passwordHide = true;
   registerForm = new FormGroup({
@@ -18,7 +18,6 @@ export class RegisterComponent implements OnInit {
     password: new FormControl('', [Validators.required])
   });
 
-  isLoggedIn: boolean = false;
   errorMessage: string = "";
 
   constructor(
@@ -28,12 +27,6 @@ export class RegisterComponent implements OnInit {
     private router: Router
   ) { }
 
-  ngOnInit(): void {
-    if (this.userSession.isLoggedIn()) {
-      this.isLoggedIn = true;
-    }
-  }
-
   onSubmit(form: any) {
     if (this.registerForm.valid) {
       this.auth.register(form.email, form.password).subscribe({
@@ -41,7 +34,6 @@ export class RegisterComponent implements OnInit {
           console.log(user.message);
           this.storage.saveUserDetails(user.token);
           this.storage.saveToken(user.token);
-          this.isLoggedIn = true;
           this.router.navigate(['']);
         },
         error: error => {
@@ -54,5 +46,14 @@ export class RegisterComponent implements OnInit {
 
   registerFormError = (controlName: string, errorName: string) => {
     return this.registerForm.controls[controlName].hasError(errorName);
+  }
+
+  isLoggedIn = () => {
+    return this.userSession.isLoggedIn();
+  }
+
+  logout() {
+    this.userSession.logout();
+    this.router.navigate(['']);
   }
 }

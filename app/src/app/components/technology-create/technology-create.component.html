@@ -48,9 +48,6 @@
                 {{ ring.name }}
               </mat-option>
             </mat-select>
-            <mat-error *ngIf="technologyForm.controls['ring'].hasError('required')">
-              Ring is <strong>required</strong>
-            </mat-error>
           </mat-form-field>
         </div>
       </div>
@@ -58,9 +55,6 @@
         <div class="col">
           <mat-form-field class="full-width">
             <textarea matInput placeholder="Classification" formControlName="classification"></textarea>
-            <mat-error *ngIf="technologyForm.controls['classification'].hasError('required')">
-              Classification is <strong>required</strong>
-            </mat-error>
           </mat-form-field>
         </div>
       </div>
@@ -69,7 +63,7 @@
       <mat-error *ngIf="errorMessage != ''">
         {{errorMessage}}
       </mat-error>
-      <button mat-raised-button color="primary" type="submit">Submit</button>
+      <button mat-raised-button color="primary" type="submit">Create</button>
     </mat-card-actions>  
   </form>
 </mat-card>

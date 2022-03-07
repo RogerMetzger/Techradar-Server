@@ -5,12 +5,12 @@ const { LoggerService } = require('./services/logger-service');
 const loggerService = new LoggerService();
 
 const access = {
-    READ: ['CEO', 'Techlead'],
-    CREATE: ['CEO', 'Techlead'],
-    UPDATE: ['CEO', 'Techlead'],
-    DELETE: ['CEO'],
-    PUBLISH: ['CEO'],
-    MANAGE: ['CEO']
+    READ: ['CTO', 'Techlead'],
+    CREATE: ['CTO', 'Techlead'],
+    UPDATE: ['CTO', 'Techlead'],
+    DELETE: ['CTO'],
+    PUBLISH: ['CTO'],
+    MANAGE: ['CTO']
 }
 
 let checkToken = (req, res, next) => {

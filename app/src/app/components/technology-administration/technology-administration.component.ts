@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Access } from 'src/app/models/access.model';
+import { Permission } from 'src/app/models/permission.model';
 import { Technology } from 'src/app/models/technology.model';
 import { TechnologyService } from 'src/app/services/technology.service';
 import { UserSessionService } from 'src/app/services/user-session.service';
@@ -11,8 +11,8 @@ import { UserSessionService } from 'src/app/services/user-session.service';
 })
 export class TechnologyAdministrationComponent {
 
-  canDelete = Access.DELETE;
-  canPublish = Access.PUBLISH;
+  canDelete = Permission.DELETE;
+  canPublish = Permission.PUBLISH;
   
   data: Technology[] = [];
   displayedColumns = ['name', 'category', 'ring', 'isPublic', 'options'];
@@ -28,8 +28,8 @@ export class TechnologyAdministrationComponent {
     });
   }
 
-  canAccess = (access: Access) => {
-    return this.userSession.canAccess(access);
+  canAccess = (perm: Permission) => {
+    return this.userSession.canAccess(perm);
   }
 
   delete(id: string) {

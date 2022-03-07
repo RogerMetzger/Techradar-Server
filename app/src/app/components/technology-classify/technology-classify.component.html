@@ -3,7 +3,7 @@
 <mat-card>
   <form [formGroup]="technologyForm" class="form-container" novalidate (ngSubmit)="onSubmit(technologyForm.value)">
     <mat-card-header>
-      <mat-card-title>Classify Technology <strong>{{ technology?.name }}</strong></mat-card-title>
+      <mat-card-title>Set classification for technology <strong>{{ technology?.name }}</strong></mat-card-title>
     </mat-card-header>
     <mat-card-content>
       <div class="row">
@@ -25,7 +25,7 @@
           <mat-form-field class="full-width">
             <textarea matInput placeholder="Classification" formControlName="classification"></textarea>
             <mat-error *ngIf="technologyForm.controls['classification'].hasError('required')">
-              Classification is <strong>required</strong>
+              Ring classification description is <strong>required</strong>
             </mat-error>
           </mat-form-field>
         </div>

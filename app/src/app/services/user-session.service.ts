@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Access } from '../models/access.model';
+import { Permission } from '../models/permission.model';
 import { SessionStorageService } from './session-storage.service';
 
 @Injectable({
@@ -23,10 +23,10 @@ export class UserSessionService {
     return this.getUser() != null;
   }
 
-  canAccess(access: Access) {
+  canAccess(perm: Permission) {
     let role = this.getRole()
     if (role) {
-      return access.includes(role);
+      return perm.includes(role);
     } else {
       return false;
     }
