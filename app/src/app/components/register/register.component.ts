@@ -35,9 +35,6 @@ export class RegisterComponent implements OnInit {
   }
 
   onSubmit(form: any) {
-
-    console.log(form)
-
     if (this.registerForm.valid) {
       this.auth.register(form.email, form.password).subscribe({
         next: user => {
@@ -45,7 +42,6 @@ export class RegisterComponent implements OnInit {
           this.storage.saveUserDetails(user.token);
           this.storage.saveToken(user.token);
           this.isLoggedIn = true;
-          window.location.reload();
           this.router.navigate(['']);
         },
         error: error => {

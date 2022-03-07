@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { TechnologyService } from 'src/app/services/technology.service';
 
 @Component({
@@ -36,13 +37,14 @@ export class TechnologyCreateComponent {
 
   constructor(
     private fb: FormBuilder, 
-    private technologyService: TechnologyService
+    private technologyService: TechnologyService,
+    private router: Router
     ) {}
 
   onSubmit(form: any): void {
     if(this.technologyForm.valid) {
       this.technologyService.create(form).subscribe({
-        next: () => window.location.reload(),
+        next: () => this.router.navigate(['/administration']),
         error: error => {
           console.error(error);
           this.errorMessage = error.error.message;

@@ -35,7 +35,6 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit(form: any) {
-    console.log(form.password);
     if(this.loginForm.valid) {
       this.auth.login(form.email, form.password).subscribe({
         next: user => {
@@ -43,7 +42,6 @@ export class LoginComponent implements OnInit {
           this.storage.saveUserDetails(user.token);
           this.storage.saveToken(user.token);
           this.isLoggedIn = true;
-          window.location.reload();
           this.router.navigate(['']);
         }, 
         error: error => {
@@ -57,8 +55,7 @@ export class LoginComponent implements OnInit {
   logout() {
     this.isLoggedIn = false;
     this.userSession.logout();
-    window.location.reload();
-    this.router.navigate(['login']);
+    this.router.navigate(['']);
   }
 
   loginFormError = (controlName: string, errorName: string) => {

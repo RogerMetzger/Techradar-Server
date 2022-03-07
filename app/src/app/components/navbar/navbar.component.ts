@@ -35,7 +35,6 @@ export class NavbarComponent {
 
   logout() {
     this.userSession.logout();
-    window.location.reload();
     this.router.navigate(['']);
   }
 }
