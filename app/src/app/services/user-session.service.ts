@@ -9,18 +9,13 @@ export class UserSessionService {
 
   constructor(private storage: SessionStorageService) { }
 
-  getEmail() {
-    let user = this.getUser();
-    return user ? user.email : null;
-  }
-
   getRole() {
-    let user = this.getUser();
+    let user = this.storage.getUserDetails();
     return user ? user.role : null;
   }
 
   isLoggedIn() {
-    return this.getUser() != null;
+    return this.storage.getUserDetails() != null;
   }
 
   canAccess(perm: Permission) {
@@ -34,9 +29,5 @@ export class UserSessionService {
 
   logout() {
     this.storage.clearStorage();
-  }
-  
-  private getUser() {
-    return this.storage.getUserDetails();
   }
 }
